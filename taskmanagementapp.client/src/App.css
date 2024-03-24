@@ -1,0 +1,25 @@
+﻿
+.box{
+    width: 1300px;
+    border: 15px solid green;
+    padding: 200px;
+    margin: 200px;
+    position: absolute; /* Position the box */
+    top: 0%; /* Center vertically */
+    left: 15%;
+}
+
+.component {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center horizontally and vertically */
+}
+
+.card-container {
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Allow cards to wrap to the next row */
+    justify-content: space-between; /* Space evenly between cards */
+    padding: 20px; /* Add padding around the container */
+}
+
