@@ -2,10 +2,15 @@ import { useState } from 'react';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { CreateTask } from '../components/routes';
+import { UpdateTask } from '../components/routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export default function Edit(){
+
+  const navigate = useNavigate();
+  const { taskId } = useParams();
+  const idNumber = parseInt(taskId);
 
     interface InputState{
         name: String,
@@ -21,20 +26,26 @@ export default function Edit(){
         content: "",
         startDate: new Date(),
         endDate: null,
-        tagsId: 1,
+        tagsId: 0,
         statusId: 1
     })
 
     async function handleSubmit(){
-        const response = await CreateTask(inputs);
-        console.log(response);
+      if(inputs.tagsId===0){console.log("error");return}
+      const response = await UpdateTask(inputs, idNumber);
+      if(response===true){
+        navigate("/");
+      }
+      else{
+        console.log("error");
+      }
     }
     const changeTag=(e)=>{
       setInputs({ ...inputs, tagsId: parseInt(e.target.value) });
     }
     return(<>
         <h1>editpage</h1>
-        
+    
         <FloatingLabel
           controlId="floatingTextarea"
           label="Name"
@@ -53,7 +64,7 @@ export default function Edit(){
           />
         </FloatingLabel>
         <Form.Select aria-label="Default select example" value={inputs.tagsId} onChange={changeTag}>
-        <option>Open this select menu</option>
+        <option value={0}>Select Tag</option>
         <option value={1}>Sport</option>
         <option value={2}>Course</option>
       </Form.Select>

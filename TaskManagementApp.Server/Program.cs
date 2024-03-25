@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Caching.Memory;
 namespace AspNetBackend
 {
     using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,8 @@ namespace AspNetBackend
                                .AllowAnyHeader();
                     });
             });
-
+            builder.Services.AddMemoryCache(); 
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

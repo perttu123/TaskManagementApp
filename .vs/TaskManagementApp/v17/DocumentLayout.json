@@ -22,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -42,15 +42,29 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "TaskController.cs",
+              "DocumentMoniker": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\Controllers\\TaskController.cs",
+              "RelativeDocumentMoniker": "TaskManagementApp.Server\\Controllers\\TaskController.cs",
+              "ToolTip": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\Controllers\\TaskController.cs",
+              "RelativeToolTip": "TaskManagementApp.Server\\Controllers\\TaskController.cs",
+              "ViewState": "AQIAAB8AAAAAAAAAAAAAwCoAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-03-17T18:08:39.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
               "Title": "TaskModel.cs",
               "DocumentMoniker": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\Models\\TaskModel.cs",
               "RelativeDocumentMoniker": "TaskManagementApp.Server\\Models\\TaskModel.cs",
               "ToolTip": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\Models\\TaskModel.cs",
               "RelativeToolTip": "TaskManagementApp.Server\\Models\\TaskModel.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAAFAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-17T18:17:05.287Z"
+              "WhenOpened": "2024-03-17T18:17:05.287Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -60,21 +74,9 @@
               "RelativeDocumentMoniker": "TaskManagementApp.Server\\TaskDbContext.cs",
               "ToolTip": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\TaskDbContext.cs",
               "RelativeToolTip": "TaskManagementApp.Server\\TaskDbContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAABAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-17T18:13:37.19Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "TaskController.cs",
-              "DocumentMoniker": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\Controllers\\TaskController.cs",
-              "RelativeDocumentMoniker": "TaskManagementApp.Server\\Controllers\\TaskController.cs",
-              "ToolTip": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\Controllers\\TaskController.cs",
-              "RelativeToolTip": "TaskManagementApp.Server\\Controllers\\TaskController.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAAAQwCkAAAAMAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-17T18:08:39.314Z",
+              "WhenOpened": "2024-03-17T18:13:37.19Z",
               "EditorCaption": ""
             }
           ]

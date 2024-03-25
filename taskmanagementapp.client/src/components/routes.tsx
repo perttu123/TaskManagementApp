@@ -3,6 +3,15 @@ interface props{
     category: null | String
 }
 
+interface create{
+    name: null | String,
+    content: null | String,
+    startDate: Date
+    endDate: null | Date,
+    tagsId: Number | null,
+    statusId: Number | null
+}
+
 export async function fetchTasks({pageIndex, category}:props ) {
     try {
         const response = await fetch(`http://localhost:5184/Task/${pageIndex}?category=${category}`);
@@ -31,7 +40,7 @@ export async function fetchStatistics() {
     }
 }
 
-export async function CreateTask(data: any) {
+export async function CreateTask(data: create) {
     try {
         const response = await fetch('http://localhost:5184/Task', {
             method: "POST",
@@ -44,9 +53,28 @@ export async function CreateTask(data: any) {
             throw new Error('Failed to create task');
         }
         const tasks = await response.json();
-        return tasks;
+        return tasks.id;
     } catch (error) {
         console.error('Error fetching tasks:', error);
         return null;
+    }
+}
+
+export async function UpdateTask(data:create, id: Number){
+    try {
+        const response = await fetch(`http://localhost:5184/Task/${id}`,{
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        if(!response.ok){
+            throw new Error('ERROR');
+        }
+        return true;
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+        return false;
     }
 }

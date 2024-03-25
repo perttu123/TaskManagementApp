@@ -18,7 +18,7 @@ function HomePage() {
     const response2 = await fetchStatistics();
     console.log(response2);
     setStats(response2.data);
-    setTasks(response.sixItems);
+    setTasks(response.cachedTasks);
     setTaskCount(response.count);
   }
   
