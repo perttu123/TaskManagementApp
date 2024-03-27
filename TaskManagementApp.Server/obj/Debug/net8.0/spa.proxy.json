@@ -3,7 +3,7 @@
 "ServerUrl": "https://localhost:5173",
 "RedirectUrl": "",
 "LaunchCommand": "npm run dev",
-"WorkingDirectory": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\..\\taskmanagementapp.client",
+"WorkingDirectory": "C:\\Users\\perttu\\Documents\\GitHub\\TaskManagementApp\\TaskManagementApp.Server\\..\\taskmanagementapp.client",
 "MaxTimeoutInSeconds": "120",
 "KeepRunning": "false"
 }
