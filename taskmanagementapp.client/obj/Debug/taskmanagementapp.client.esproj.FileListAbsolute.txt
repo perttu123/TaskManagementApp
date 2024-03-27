@@ -1,1 +1,2 @@
 C:\Users\Perttu\Documents\Visual Studio 2022\Uusi kansio\TaskManagementApp\taskmanagementapp.client\obj\Debug\taskmanagementapp.client.esproj.CoreCompileInputs.cache
+C:\Users\perttu\Documents\GitHub\TaskManagementApp\taskmanagementapp.client\obj\Debug\taskmanagementapp.client.esproj.CoreCompileInputs.cache

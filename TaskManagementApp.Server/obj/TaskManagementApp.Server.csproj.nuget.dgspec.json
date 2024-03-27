@@ -1,23 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\TaskManagementApp.Server.csproj": {}
+    "C:\\Users\\perttu\\Documents\\GitHub\\TaskManagementApp\\TaskManagementApp.Server\\TaskManagementApp.Server.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\TaskManagementApp.Server.csproj": {
+    "C:\\Users\\perttu\\Documents\\GitHub\\TaskManagementApp\\TaskManagementApp.Server\\TaskManagementApp.Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\TaskManagementApp.Server.csproj",
+        "projectUniqueName": "C:\\Users\\perttu\\Documents\\GitHub\\TaskManagementApp\\TaskManagementApp.Server\\TaskManagementApp.Server.csproj",
         "projectName": "TaskManagementApp.Server",
-        "projectPath": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\TaskManagementApp.Server.csproj",
-        "packagesPath": "C:\\Users\\Perttu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\TaskManagementApp.Server\\obj\\",
+        "projectPath": "C:\\Users\\perttu\\Documents\\GitHub\\TaskManagementApp\\TaskManagementApp.Server\\TaskManagementApp.Server.csproj",
+        "packagesPath": "C:\\Users\\perttu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\perttu\\Documents\\GitHub\\TaskManagementApp\\TaskManagementApp.Server\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\Perttu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\perttu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [

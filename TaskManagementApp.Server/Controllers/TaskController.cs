@@ -65,11 +65,18 @@ namespace AspNetBackend.Controllers
             return Ok(new { cachedTasks });
         }
 
-        [HttpGet("stats")]
-        public async Task<ActionResult<object>> GetTasks()
-        {
+        // [HttpGet]
+        // private async Task<List<TaskModel>> GetFreshTasksFromDataSource(int pageIndex, string category){
 
-            return Ok(new { data = "hello world" });
+            
+        // }
+
+        [HttpGet("stats")]
+        public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks()
+        {
+             List<TaskModel> tasks = new List<TaskModel>();
+            tasks = await _context.Task.ToListAsync();
+            return Ok(new { data = tasks });
         }
 
         [HttpPost]
@@ -115,6 +122,21 @@ namespace AspNetBackend.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
                 throw;
             }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<IEnumerable<TaskModel>>> DeleteTask(int id){
+            var taskFound = await _context.Task.FirstOrDefaultAsync(item => item.Id == id);
+
+            if (taskFound == null)
+            {
+                return NotFound(); // Return 404 Not Found if task with given id is not found
+            }
+
+            _context.Task.Remove(taskFound);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
 
     }

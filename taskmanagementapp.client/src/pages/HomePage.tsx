@@ -37,11 +37,15 @@ function HomePage() {
           <Row>
           
               <Col md={8}>
-                    <Row>
+                {tasks.length==0 ? (<h1>Ei taskeja</h1>):
+                (
+                  <Row>
                         <Col>
                             <CardContainer data={tasks} />
                         </Col>
                     </Row>
+                
+              )}
                     
               </Col>
                 <Col md={4}>
@@ -59,7 +63,6 @@ function HomePage() {
     }
     return (
       <Form.Select aria-label="Default select example" style={{width: '200px'}} onChange={handleCategory} value={category}>
-        <option>Open this select menu</option>
         <option value="newest">Newest</option>
         <option value="oldest">Oldest</option>
         <option value="3">Three</option>
