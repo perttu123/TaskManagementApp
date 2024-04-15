@@ -18,7 +18,7 @@ function HomePage() {
     const response2 = await fetchStatistics();
     console.log(response2);
     setStats(response2.data);
-    setTasks(response.cachedTasks);
+    setTasks(response.sixItems);
     setTaskCount(response.count);
   }
   
@@ -32,7 +32,7 @@ function HomePage() {
 
   return (
     <>
-        <Query/>
+
         
           <Row>
           

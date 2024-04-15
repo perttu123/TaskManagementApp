@@ -17,7 +17,7 @@ export default function Edit(){
         content: String,
         startDate: Date,
         endDate: Date | null,
-        tagsId: Number,
+        tagId: Number,
         statusId: Number
     };
 
@@ -26,7 +26,7 @@ export default function Edit(){
         content: "",
         startDate: new Date(),
         endDate: null,
-        tagsId: 0,
+        tagId: 1,
         statusId: 1
     })
 
@@ -41,7 +41,7 @@ export default function Edit(){
       }
     }
     const changeTag=(e)=>{
-      setInputs({ ...inputs, tagsId: parseInt(e.target.value) });
+      setInputs({ ...inputs, tagId: parseInt(e.target.value) });
     }
     return(<>
         <h1>editpage</h1>
@@ -63,8 +63,7 @@ export default function Edit(){
             value={inputs.content}
           />
         </FloatingLabel>
-        <Form.Select aria-label="Default select example" value={inputs.tagsId} onChange={changeTag}>
-        <option value={0}>Select Tag</option>
+        <Form.Select aria-label="Default select example" value={inputs.tagId} onChange={changeTag}>
         <option value={1}>Sport</option>
         <option value={2}>Course</option>
       </Form.Select>

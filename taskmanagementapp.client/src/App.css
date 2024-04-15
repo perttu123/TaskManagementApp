@@ -17,9 +17,11 @@
 }
 
 .card-container {
-    display: flex; /* Use flexbox for layout */
-    flex-wrap: wrap; /* Allow cards to wrap to the next row */
-    justify-content: space-between; /* Space evenly between cards */
-    padding: 20px; /* Add padding around the container */
+    position: absolute;
+    top: 50px; /* Move 50 pixels from the top */
+    left: 100px; /* Move 100 pixels from the left */
+    width: 200px;
+    height: 200px;
+    background-color: lightblue;
 }
 

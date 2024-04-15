@@ -14,38 +14,61 @@ namespace AspNetBackend.Controllers
     {
 
         private readonly TaskDbContext _context; // Replace with your actual DbContext
-        private readonly IMemoryCache _cache;
+        // private readonly IMemoryCache _cache;
 
-        public TaskController(TaskDbContext context, IMemoryCache memoryCache)
+        public TaskController(TaskDbContext context)
         {
             _context = context;
-            _cache = memoryCache;
+            // _cache = memoryCache;
         }
 
         [HttpGet("{pageIndex}")]
-        public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks(int pageIndex = 0, string category = "")
+        public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks(int pageIndex = 0, string category = "", string order = "")
         {
-            string cacheKey = $"Tasks_{pageIndex}_{category}";
-            if(!_cache.TryGetValue(cacheKey, out List<TaskModel> cachedTasks))
+            // string cacheKey = $"Tasks_{pageIndex}_{category}";
+            // if(!_cache.TryGetValue(cacheKey, out List<TaskModel> cachedTasks))
+            // {
+            IQueryable<TaskModel> query = _context.Task.Include(task => task.Tag).Include(task => task.Status);
+
+            switch (category)
             {
-                List<TaskModel> tasks = new List<TaskModel>();
-                if (category == "")
-                {
-                    tasks = await _context.Task.ToListAsync();
-                }
-                else if (category == "newest")
-                {
-                    tasks = await _context.Task
-                            .OrderByDescending(t => t.StartDate)
-                            .ToListAsync();
-                }
-                else if (category == "oldest")
-                {
-                    tasks = await _context.Task.ToListAsync();
-                }
+                case "sport":
+                    query = query.Where(t => t.TagId == 1);
+                    break;
+                case "course":
+                    query = query.Where(t => t.TagId == 2);
+                    break;
+                // Handle other categories if needed
+                default:
+                    break;
+            }
+            switch(order){
+                case "newest":
+                     query = query.OrderBy(t => t.StartDate);
+                break;
+                case "oldest":
+                    query = query.OrderByDescending(t => t.StartDate);
+                break;
+                default:
+                break;
+            }
+    
+            //switch (order)
+            //{
+            //    case "newest":
+            //        tasks = await _context.Task
+            //                .OrderByDescending(t => t.StartDate)
+            //                .ToListAsync();
+            //        break;
+            //    case "oldest":
 
-
-                List<TaskModel> sixItems = new List<TaskModel>();
+            //        tasks = await _context.Task.ToListAsync();
+            //        break;
+            //    default:
+            //        break;
+            //}
+            List<TaskModel> tasks = await query.ToListAsync();
+            List<TaskModel> sixItems = new List<TaskModel>();
                 var startIndex = pageIndex * 6;
                 int count = 0;
 
@@ -58,11 +81,11 @@ namespace AspNetBackend.Controllers
                     count++;
                 }
                 //return Ok(new { sixItems, tasks.Count });
-                _cache.Set(cacheKey, sixItems, TimeSpan.FromMinutes(1));
+                // _cache.Set(cacheKey, sixItems, TimeSpan.FromMinutes(1));
 
-                cachedTasks = sixItems;
-            }
-            return Ok(new { cachedTasks });
+                // cachedTasks = sixItems;
+            // }
+            return Ok(new { sixItems, tasks.Count });
         }
 
         // [HttpGet]
@@ -74,8 +97,9 @@ namespace AspNetBackend.Controllers
         [HttpGet("stats")]
         public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks()
         {
-             List<TaskModel> tasks = new List<TaskModel>();
+            List<TaskModel> tasks = new List<TaskModel>();
             tasks = await _context.Task.ToListAsync();
+
             return Ok(new { data = tasks });
         }
 
@@ -83,8 +107,17 @@ namespace AspNetBackend.Controllers
         public async Task<ActionResult<IEnumerable<TaskModel>>> PostTask(TaskModel task)
         {
             try
-            {
-                Console.WriteLine(task.StartDate);
+            {   
+         
+        task.Name = null;
+        task.Content = null;
+        task.StartDate = DateTime.UtcNow;
+        task.EndDate = null;
+        task.TagId = 1; // Assuming TagId is nullable
+        task.StatusId = 1; // Assuming StatusId is nullable
+        task.Tag = null;
+        task.Status = null;
+
                 _context.Task.Add(task);
                 await _context.SaveChangesAsync();
                 return Ok(new { id=task.Id });
@@ -111,7 +144,7 @@ namespace AspNetBackend.Controllers
                 existingTask.Content = task.Content;
                 existingTask.StartDate = task.StartDate;
                 existingTask.EndDate = task.EndDate;
-                existingTask.TagsId = task.TagsId;
+                existingTask.TagId = task.TagId;
                 existingTask.StatusId = task.StatusId;
                 _context.Task.Update(existingTask);
                 await _context.SaveChangesAsync();
@@ -139,5 +172,28 @@ namespace AspNetBackend.Controllers
             return NoContent();
         }
 
+        [HttpPut("Status/{id}")]
+        public async Task<ActionResult<IEnumerable<TaskModel>>> UpdateTask(int id, int status)
+        {
+            try
+            {
+                var existingTask = await _context.Task.Where(item=>item.Id == id).FirstOrDefaultAsync();
+
+                if (existingTask == null)
+                {
+                    return NotFound();
+                }
+                
+                existingTask.StatusId = status;
+                _context.Task.Update(existingTask);
+                await _context.SaveChangesAsync();
+                return Ok(existingTask);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

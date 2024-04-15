@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "DYO3tqDD7DF0UDbS641w2CLOQ94AiFbmCrJw2BqZIT4=",
+  "Hash": "xrZUe3fwtQNegPHxE8DzFhCh58NuHSatncnKci1CQyY=",
   "Source": "TaskManagementApp.Server",
   "BasePath": "_content/TaskManagementApp.Server",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\Users\\perttu\\Documents\\GitHub\\TaskManagementApp\\taskmanagementapp.client\\taskmanagementapp.client.esproj",
+      "Identity": "C:\\Users\\Perttu\\Documents\\Visual Studio 2022\\Uusi kansio\\TaskManagementApp\\taskmanagementapp.client\\taskmanagementapp.client.esproj",
       "Version": 2,
       "Source": "taskmanagementapp.client",
       "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",

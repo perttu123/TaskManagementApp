@@ -17,7 +17,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Layout/>}>
                     <Route path="/" element={<HomePage/>}/>
-                    <Route path="/edit" element={<Tasks/>}/>
+                    <Route path="/tasks" element={<Tasks/>}/>
                     <Route path="/edit/:taskId" element={<Edit/>}/>
                     <Route path='/statistics' element={<StatisticsPage/>}/>
                 </Route>

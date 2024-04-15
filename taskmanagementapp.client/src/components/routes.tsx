@@ -1,6 +1,8 @@
 interface props{
     pageIndex: Number,
-    category: null | String
+    category: null | String,
+    order: null | String
+    
 }
 
 interface create{
@@ -12,9 +14,9 @@ interface create{
     statusId: Number | null
 }
 
-export async function fetchTasks({pageIndex, category}:props ) {
+export async function fetchTasks({pageIndex, category, order}:props ) {
     try {
-        const response = await fetch(`http://localhost:5184/Task/${pageIndex}?category=${category}`);
+        const response = await fetch(`http://localhost:5184/Task/${pageIndex}?category=${category}&order=${order}`);
         if (!response.ok) {
             throw new Error('Failed to fetch tasks');
         }
@@ -78,6 +80,25 @@ export async function UpdateTask(data:create, id: Number){
         return false;
     }
 }
+
+export async function UpdateStatus(id:number, status:number) {
+    try {
+        const response = await fetch(`http://localhost:5184/Task/Status/${id}?status=${status}`, {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+        if (!response.ok) {
+            throw new Error('ERROR');
+        }
+        return true;
+    } catch (error) {
+        console.error('Error updating task status:', error);
+        return false;
+    }
+}
+
 
 export async function DeleteTask(id: Number){
     try {

@@ -1,8 +1,13 @@
 import Card from 'react-bootstrap/Card';
 import { useNavigate } from 'react-router-dom';
 import { CreateTask } from '../components/routes';
-import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
+import { useEffect, useState } from 'react';
+import { Row, Col, Form, Container } from 'react-bootstrap';
+import CardContainer from '../components/CardContainer.tsx';
+import Notifications from '../components/Notifications.tsx';
+import PageChange from '../components/Pagination.tsx';
+import {fetchTasks, fetchStatistics} from '../components/routes.tsx';
 
 export default function Tasks(){
 
@@ -16,8 +21,6 @@ export default function Tasks(){
       tagsId: Number,
       statusId: Number 
   }
-
-
     const mockInputData: InputState = {
     name: "",
     content: "",
@@ -33,19 +36,69 @@ export default function Tasks(){
       navigate(`/edit/${response}`);
     }
 
+    const [tasks, setTasks] = useState([]);
+    const [category, setCategory] = useState("");
+    const [order, setOrder] = useState("newest");
+    const [pageIndex, setPageIndex] = useState(0);
+    const [taskCount, setTaskCount] = useState(0);
+    const [stats, setStats] = useState("");
+
+    const fetchTask= async()=>{
+      const response = await fetchTasks({pageIndex, category , order});
+      const response2 = await fetchStatistics();
+      console.log(response);
+      setStats(response2.data);
+      setTasks(response.sixItems);
+      console.log("data: ", response.sixItems);
+      setTaskCount(response.count);
+    }
+    
+    useEffect(()=>{
+      fetchTask();
+      console.log(category, order);
+    }, [pageIndex, category, order])
+  
     return (<>
-    <Button variant="primary" onClick={()=>handleCreate()}>Create New Task</Button>{' '}
-          <Card style={{ width: '30rem', height: '40rem'}}>
-        <Card.Body>
-          <Card.Title>asdasd</Card.Title>
-          <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
-          <Card.Text>
-           jfaisf jaa ofoask f oasofoas foas ko kokokasof oasof 
-          </Card.Text>
-          <Card.Link></Card.Link>
-          <Card.Link ></Card.Link>
-        </Card.Body>
-      </Card>
+
+   
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px', paddingTop: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', paddingLeft: "20px"}}>
+              <Query/>
+          </div>
+          <Button variant="primary" onClick={handleCreate} style={{marginRight: "60px"}}>Create New Task</Button>{' '}
+        </div>
+      
+        
+      
+        <CardContainer data={tasks} />
+
+       
+      <PageChange taskCount={taskCount} pageIndex={setPageIndex}/>
+ 
+   
     </>)
+
+function Query() {
+
+  function handleCategory(e){
+    setCategory(e.target.value);
+  }
+  function handleOrder(e){
+    setOrder(e.target.value);
+  }
+
+  return (<>
+    <Form.Select aria-label="Default select example" style={{width: '300px', height: "50px" }} onChange={handleCategory} value={category}>
+    <option value="">All</option>
+    <option value="sport">Sport</option>
+    <option value="course">Course</option>
+  </Form.Select>
+  <Form.Select aria-label="Default select example" style={{width: '300px', height: "50px" }} onChange={handleOrder} value={order}>
+      <option value="newest">Newest</option>
+      <option value="oldest">Oldest</option>
+    </Form.Select>
+  </>
+  );
+}
 }
     

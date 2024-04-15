@@ -6,7 +6,8 @@ interface tyyppi{
 export default function Notifications({data}:tyyppi){
 
     return (<>
-          <Card style={{ width: '30rem', height: '40rem'}}>
+    <div style={{paddingTop:"30px"}}>
+      <Card style={{ width: '30rem', height: '40rem'}}>
         <Card.Body>
           <Card.Title>Statistics</Card.Title>
           <Card.Subtitle className="mb-2 text-muted"></Card.Subtitle>
@@ -20,5 +21,6 @@ export default function Notifications({data}:tyyppi){
           <Card.Link ></Card.Link>
         </Card.Body>
       </Card>
+      </div>
     </>)
 }
