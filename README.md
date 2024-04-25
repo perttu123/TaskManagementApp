@@ -1,1 +1,1 @@
-SQL filet luo tietokannan taskDBBB ja inserttaa datan.
+SQL filet luo tietokannan valmiiksi nimellä taskDBBB ja inserttaa datan ja taulut.
