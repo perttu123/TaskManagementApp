@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { CreateTask } from '../components/routes';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
-import Form from 'react-bootstrap';
+import {Form} from 'react-bootstrap';
 import CardContainer from '../components/CardContainer.tsx';
 import Pagination from '../components/Pagination.tsx';
 import {fetchTasks, fetchStatistics} from '../components/routes.tsx';
