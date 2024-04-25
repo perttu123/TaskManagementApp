@@ -1,4 +1,3 @@
-
 import './App.css';
 import Edit from './pages/Edit';
 import Layout from './pages/Layout';
@@ -12,7 +11,6 @@ import StatisticsPage from './pages/StatisticsPage';
 function App() {
 
     return (<>
-
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Layout/>}>
@@ -23,9 +21,8 @@ function App() {
                 </Route>
             </Routes>
         </BrowserRouter>
-        </>
+    </>
     );
-
 }
 
 export default App;

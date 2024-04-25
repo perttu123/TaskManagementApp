@@ -7,11 +7,11 @@ export default function Layout(){
        
     <Navbar bg="primary" data-bs-theme="dark">
     <Container>
-        <Navbar.Brand href="/">Navbar</Navbar.Brand>
+        <Navbar.Brand href="/">Task Manager</Navbar.Brand>
           <Nav className="me-auto">
-            <Link to="/">Home</Link>
-            <Link to="/tasks">Tasks</Link>
-            <Link to="/statistics">Stats</Link>
+            <Link to="/" className="nav-link">Home</Link>
+            <Link to="/tasks" className="nav-link">Tasks</Link>
+            <Link to="/statistics" className="nav-link">Statistics</Link>
           </Nav>
     </Container>
     </Navbar>

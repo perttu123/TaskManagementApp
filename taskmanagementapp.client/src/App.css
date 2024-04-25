@@ -25,3 +25,13 @@
     background-color: lightblue;
 }
 
+.nav-link {
+    color: white; /* Text color */
+    margin-right: 10px; /* Margin between links */
+}
+
+.nav-link:hover {
+    color: #ffffff; /* Text color on hover */
+    background-color: #007bff; /* Background color on hover */
+}
+

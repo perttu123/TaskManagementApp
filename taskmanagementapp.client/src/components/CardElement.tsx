@@ -16,11 +16,12 @@ interface InputState {
   status: {name: string, theme: number}
 }
 
-export default function CardElement({ data }: { data: InputState }) {
+export default function CardElement({ data, setRefresh, refresh }: { data: InputState }){
 
   const [deleteMessage, setDeleteMessage] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
   const [status, setStatus] = useState(0);
+  
 
   const navigate = useNavigate();
   function handleEdit(){
@@ -29,12 +30,14 @@ export default function CardElement({ data }: { data: InputState }) {
   async function handleDelete(){
     console.log("poistetty");
     await DeleteTask(data.id);
-    setDeleteMessage(false);  
+    setDeleteMessage(false); 
+    setRefresh(!refresh); 
   }
   async function handleStatusChange(){
     const response = await UpdateStatus(data.id, status);
     if(response==true){
-      setShowStatus(!showStatus)
+      setShowStatus(!showStatus);
+      setRefresh(!refresh);
     }
   }
   let taustavari = "";
@@ -64,10 +67,10 @@ export default function CardElement({ data }: { data: InputState }) {
    
     {showStatus?
     <><Form.Select aria-label="Default select example" value={status} onChange={(e)=>setStatus(e.target.value)}>
-    <option>Open this select menu</option>
-    <option value={1}>One</option>
-    <option value={2}>Two</option>
-    <option value={3}>Three</option>
+    <option>Select status</option>
+    <option value={3}>Done</option>
+    <option value={2}>In progress</option>
+    <option value={4}>Cancelled</option>
     </Form.Select>
     <Button variant="primary" size="sm" onClick={()=>handleStatusChange()}>Save</Button></>:
     

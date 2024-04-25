@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AspNetBackend.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Identity.Client;
 
 
 namespace AspNetBackend.Controllers
@@ -12,22 +13,17 @@ namespace AspNetBackend.Controllers
     [Route("[controller]")]
     public class TaskController : ControllerBase
     {
-
-        private readonly TaskDbContext _context; // Replace with your actual DbContext
-        // private readonly IMemoryCache _cache;
-
+        private readonly TaskDbContext _context; 
+        
         public TaskController(TaskDbContext context)
         {
-            _context = context;
-            // _cache = memoryCache;
+            _context = context;    
         }
 
         [HttpGet("{pageIndex}")]
         public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks(int pageIndex = 0, string category = "", string order = "")
         {
-            // string cacheKey = $"Tasks_{pageIndex}_{category}";
-            // if(!_cache.TryGetValue(cacheKey, out List<TaskModel> cachedTasks))
-            // {
+
             IQueryable<TaskModel> query = _context.Task.Include(task => task.Tag).Include(task => task.Status);
 
             switch (category)
@@ -38,7 +34,6 @@ namespace AspNetBackend.Controllers
                 case "course":
                     query = query.Where(t => t.TagId == 2);
                     break;
-                // Handle other categories if needed
                 default:
                     break;
             }
@@ -52,21 +47,7 @@ namespace AspNetBackend.Controllers
                 default:
                 break;
             }
-    
-            //switch (order)
-            //{
-            //    case "newest":
-            //        tasks = await _context.Task
-            //                .OrderByDescending(t => t.StartDate)
-            //                .ToListAsync();
-            //        break;
-            //    case "oldest":
 
-            //        tasks = await _context.Task.ToListAsync();
-            //        break;
-            //    default:
-            //        break;
-            //}
             List<TaskModel> tasks = await query.ToListAsync();
             List<TaskModel> sixItems = new List<TaskModel>();
                 var startIndex = pageIndex * 6;
@@ -80,27 +61,41 @@ namespace AspNetBackend.Controllers
                     }
                     count++;
                 }
-                //return Ok(new { sixItems, tasks.Count });
-                // _cache.Set(cacheKey, sixItems, TimeSpan.FromMinutes(1));
 
-                // cachedTasks = sixItems;
-            // }
             return Ok(new { sixItems, tasks.Count });
         }
 
-        // [HttpGet]
-        // private async Task<List<TaskModel>> GetFreshTasksFromDataSource(int pageIndex, string category){
-
+        [HttpGet("homepage")]
+        public async Task<ActionResult<IEnumerable<TaskModel>>> GetHomePageTasks(){
             
-        // }
+            IQueryable<TaskModel> query = _context.Task.Include(task => task.Tag).Include(task => task.Status);
+            List<TaskModel> tasks = await query
+                .Where(task => task.StatusId == 2) // Filter tasks with status 3
+                .Take(3) // Take only the first three tasks
+                .ToListAsync();
+
+            return Ok(new { data = tasks });
+        }
 
         [HttpGet("stats")]
         public async Task<ActionResult<IEnumerable<TaskModel>>> GetTasks()
         {
-            List<TaskModel> tasks = new List<TaskModel>();
-            tasks = await _context.Task.ToListAsync();
+            IQueryable<TaskModel> query = _context.Task.Include(task => task.Tag).Include(task => task.Status);
+            List<TaskModel> tasks = await query.ToListAsync();
+            int TaskCount = tasks.Count;
+            int InProgressTasks = tasks.Where(item => item.StatusId == 2).Count();
+            int DoneTasks = tasks.Where(item => item.StatusId == 3).Count();
+            int NewTasks = tasks.Where(item => item.StatusId == 1).Count();
+            int CancelledTasks= tasks.Where(item => item.StatusId == 4).Count();
+            DateTime timeNow = DateTime.Now;
+            DateTime weekAgo = timeNow.AddDays(-7);
+            int CreatedThisWeek = tasks.Count(item => item.StartDate >= weekAgo && item.StartDate <= timeNow);
+            int CompletedThisWeek = tasks.Where(item=>item.StatusId==3).Count(item=>item.StartDate>=weekAgo && item.StartDate<=timeNow);
 
-            return Ok(new { data = tasks });
+            //tasks = await _context.Task.ToListAsync();
+            return Ok(new { taskCount = TaskCount, inProgressCount = InProgressTasks,
+                            doneCount = DoneTasks, cancelledCount = CancelledTasks, newCount = NewTasks,
+                            weeklyCreationCount = CreatedThisWeek, weeklyCompleted = CompletedThisWeek});
         }
 
         [HttpPost]
@@ -109,14 +104,14 @@ namespace AspNetBackend.Controllers
             try
             {   
          
-        task.Name = null;
-        task.Content = null;
-        task.StartDate = DateTime.UtcNow;
-        task.EndDate = null;
-        task.TagId = 1; // Assuming TagId is nullable
-        task.StatusId = 1; // Assuming StatusId is nullable
-        task.Tag = null;
-        task.Status = null;
+            task.Name = null;
+            task.Content = null;
+            task.StartDate = DateTime.UtcNow;
+            task.EndDate = null;
+            task.TagId = 1; // Assuming TagId is nullable
+            task.StatusId = 1; // Assuming StatusId is nullable
+            task.Tag = null;
+            task.Status = null;
 
                 _context.Task.Add(task);
                 await _context.SaveChangesAsync();
@@ -185,6 +180,7 @@ namespace AspNetBackend.Controllers
                 }
                 
                 existingTask.StatusId = status;
+                existingTask.EndDate = DateTime.UtcNow;
                 _context.Task.Update(existingTask);
                 await _context.SaveChangesAsync();
                 return Ok(existingTask);

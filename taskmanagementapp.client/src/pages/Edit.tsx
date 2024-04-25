@@ -34,7 +34,7 @@ export default function Edit(){
       if(inputs.tagsId===0){console.log("error");return}
       const response = await UpdateTask(inputs, idNumber);
       if(response===true){
-        navigate("/");
+        navigate("/tasks");
       }
       else{
         console.log("error");
@@ -67,12 +67,6 @@ export default function Edit(){
         <option value={1}>Sport</option>
         <option value={2}>Course</option>
       </Form.Select>
-      {/* <Form.Select aria-label="Default select example">
-        <option>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </Form.Select> */}
       <Button variant="primary" onClick={()=>handleSubmit()}>Add</Button>{' '}
       
     </>)

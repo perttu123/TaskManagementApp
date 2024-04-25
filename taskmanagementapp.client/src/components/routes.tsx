@@ -2,7 +2,6 @@ interface props{
     pageIndex: Number,
     category: null | String,
     order: null | String
-    
 }
 
 interface create{
@@ -35,6 +34,20 @@ export async function fetchStatistics() {
             throw new Error('Failed to fetch tasks');
         }
         const data = response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching tasks:', error);
+        return null;
+    }
+}
+
+export async function fetchHomePageTasks() {
+    try {
+        const response = await fetch(`http://localhost:5184/Task/homepage`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch tasks');
+        }
+        const data = await response.json();
         return data;
     } catch (error) {
         console.error('Error fetching tasks:', error);

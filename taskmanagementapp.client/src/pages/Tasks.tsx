@@ -1,12 +1,10 @@
-import Card from 'react-bootstrap/Card';
 import { useNavigate } from 'react-router-dom';
 import { CreateTask } from '../components/routes';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
-import { Row, Col, Form, Container } from 'react-bootstrap';
+import Form from 'react-bootstrap';
 import CardContainer from '../components/CardContainer.tsx';
-import Notifications from '../components/Notifications.tsx';
-import PageChange from '../components/Pagination.tsx';
+import Pagination from '../components/Pagination.tsx';
 import {fetchTasks, fetchStatistics} from '../components/routes.tsx';
 
 export default function Tasks(){
@@ -42,6 +40,7 @@ export default function Tasks(){
     const [pageIndex, setPageIndex] = useState(0);
     const [taskCount, setTaskCount] = useState(0);
     const [stats, setStats] = useState("");
+    const [refresh, setRefresh] = useState(false);
 
     const fetchTask= async()=>{
       const response = await fetchTasks({pageIndex, category , order});
@@ -56,27 +55,22 @@ export default function Tasks(){
     useEffect(()=>{
       fetchTask();
       console.log(category, order);
-    }, [pageIndex, category, order])
+    }, [pageIndex, category, order, refresh])
   
     return (<>
 
-   
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '40px', paddingTop: '20px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', paddingLeft: "20px"}}>
-              <Query/>
-          </div>
-          <Button variant="primary" onClick={handleCreate} style={{marginRight: "60px"}}>Create New Task</Button>{' '}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px', paddingTop: '14px' }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-end', paddingRight: "50px", paddingLeft: "50px", backgroundColor: 'lightgrey'}}>
+          <Query/>
+          <Pagination taskCount={taskCount} pageIndex={setPageIndex}/>  
+        </div>
+
+          <Button variant="primary" size='lg' onClick={handleCreate} style={{marginRight: "60px"}}>Create New Task</Button>{' '}
         </div>
       
-        
-      
-        <CardContainer data={tasks} />
-
-       
-      <PageChange taskCount={taskCount} pageIndex={setPageIndex}/>
- 
-   
+        <CardContainer data={tasks} setRefresh={setRefresh} refresh={refresh}/>      
     </>)
+
 
 function Query() {
 

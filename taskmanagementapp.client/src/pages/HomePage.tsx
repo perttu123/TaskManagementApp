@@ -1,74 +1,54 @@
 import { useEffect, useState } from 'react';
-import { Row, Col, Form } from 'react-bootstrap';
-import {fetchTasks, fetchStatistics} from '../components/routes.tsx';
+import { Row, Col} from 'react-bootstrap';
+import { fetchStatistics, fetchHomePageTasks} from '../components/routes.tsx';
 import CardContainer from '../components/CardContainer.tsx';
 import Notifications from '../components/Notifications.tsx';
-import PageChange from '../components/Pagination.tsx';
+import { useNavigate } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 function HomePage() {
 
+  const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
-  const [category, setCategory] = useState("");
-  const [pageIndex, setPageIndex] = useState(0);
-  const [taskCount, setTaskCount] = useState(0);
-  const [stats, setStats] = useState("");
+  const [refresh, setRefresh] = useState(false);
+  const [stats, setStats] = useState({})
 
   const fetchTask= async()=>{
-    const response = await fetchTasks({pageIndex, category});
+    const response = await fetchHomePageTasks();
     const response2 = await fetchStatistics();
-    console.log(response2);
-    setStats(response2.data);
-    setTasks(response.sixItems);
-    setTaskCount(response.count);
+    setTasks(response.data);
+    setStats(response2);
   }
   
-
-
   useEffect(()=>{
     fetchTask();
-  }, [pageIndex, category])
-
-
+  }, [refresh])
 
   return (
     <>
-
-        
-          <Row>
-          
-              <Col md={8}>
-                {tasks.length==0 ? (<h1>Ei taskeja</h1>):
-                (
-                  <Row>
-                        <Col>
-                            <CardContainer data={tasks} />
-                        </Col>
-                    </Row>
-                
-              )}
+        <Row>
+          <Col md={8}>
+            {tasks.length==0 ? (<><h1>No tasks In progress currently</h1> 
+            <Button variant="primary" size="lg" onClick={()=>navigate("/tasks")}>Go To Tasks page</Button></>):
+              ( <>
+               <h1>Tasks in progress</h1>
+                <Row>
+               
+                  <Col>
+                  
+                    <CardContainer data={tasks} setRefresh={setRefresh} refresh={refresh}/>
+                  </Col>
+                  <Button variant="primary" size="lg" onClick={()=>navigate("/tasks")}>Go To Tasks page</Button>
+                </Row>              
+                </>)}
                     
               </Col>
                 <Col md={4}>
                   <Notifications data={stats}/>
                 </Col>
           </Row>
-      <PageChange taskCount={taskCount} pageIndex={setPageIndex}/>
     </>
 );
-
-  function Query() {
-
-    function handleCategory(e){
-      setCategory(e.target.value);
-    }
-    return (
-      <Form.Select aria-label="Default select example" style={{width: '200px'}} onChange={handleCategory} value={category}>
-        <option value="newest">Newest</option>
-        <option value="oldest">Oldest</option>
-        <option value="3">Three</option>
-      </Form.Select>
-    );
-  }
 }
 
 
